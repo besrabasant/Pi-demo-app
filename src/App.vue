@@ -31,19 +31,20 @@ export default {
             this.messages.push(message);
         },
         async sendMessage() {
-            await app.service('messages').create({
+            await app.service('models/message').create({
                 text: this.messageInput
             });
 
             this.messageInput = '';
         },
         async init() {
-            this.messages = await app.service('messages').find();
+            this.messages = await app.service('models/message').find();
         }
     },
     mounted() {
         this.init();
-        app.service('messages').on('created', this.addMessage);
+
+        app.service('models/message').on('created', this.addMessage);
     }
 }
 </script>
